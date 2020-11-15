@@ -3,28 +3,37 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const uniqid = require("uniqid");
 
+//middleware
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+
 let roomsAvailable = [];
 let roomNo = 1000;
 let romeBooked = [];
+
+//date and time format
 let date = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
 let time = /^(0[0-9]|1\d|2[0-3])\:(00)/;
 
+
+//api to get rooms available
 app.get("/roomsAvailable", function (req, res) {
     res.json({
         output: roomsAvailable,
     });
 });
 
+//api to get rooms booked
 app.get("/romesBooked", function (req, res) {
     res.json({
         output: romeBooked,
     });
 });
 
+
+//Api to create new room
 app.post("/createRoom", function (req, res) {
     let room = {};
     room.id = uniqid();
@@ -61,6 +70,8 @@ app.post("/createRoom", function (req, res) {
     });
 });
 
+
+//Api for booking new halls
 app.post("/booking", function (req, res) {
     let booking = {};
     booking.id = uniqid();
@@ -183,6 +194,8 @@ app.post("/booking", function (req, res) {
         });
     }
 });
+
+
 
 app.listen(3000, () => {
     console.log("Listening to port 3000");
